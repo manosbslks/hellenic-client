@@ -1,35 +1,33 @@
 {
   "schemaVersion": 1,
-  "id": "cheatutils",
+  "id": "hellenicclient",
   "version": "${version}",
 
-  "name": "CheatUtils",
+  "name": "Hellenic Client",
   "icon": "web/images/favicon.png",
-  "description": "Open http://localhost:5005/ in your browser to access mod settings.\nYou can find tutorial videos on curseforge page: https://www.curseforge.com/minecraft/mc-mods/cheatutils\nSource code: https://github.com/Zergatul/cheatutils",
+  "description": "Minecraft Cheat Client. Made by basilakos1.\nOpen http://localhost:5005/ in your browser to access the control panel.",
   "authors": [
+    "basilakos1"
+  ],
+  "contributors": [
     "Zergatul",
     "SomeRandomDude-a"
   ],
-  "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/cheatutils",
-    "sources": "https://github.com/Zergatul/cheatutils",
-    "issues": "https://github.com/Zergatul/cheatutils/issues"
-  },
 
   "license": "MIT",
 
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.zergatul.cheatutils.ModMain"
+      "gr.hellenic.client.ModMain"
     ]
   },
-  "accessWidener": "cheatutils.classtweaker",
+  "accessWidener": "hellenicclient.classtweaker",
   "mixins": [
-    "cheatutils.common.mixins.json",
-    "cheatutils.iris.mixins.json",
-    "cheatutils.fnf.mixins.json",
-    "cheatutils.fabric.mixins.json"
+    "hellenicclient.common.mixins.json",
+    "hellenicclient.iris.mixins.json",
+    "hellenicclient.fnf.mixins.json",
+    "hellenicclient.fabric.mixins.json"
   ],
 
   "depends": {

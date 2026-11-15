@@ -1,0 +1,22 @@
+package gr.hellenic.client.mixins.common;
+
+import com.mojang.blaze3d.platform.FramerateLimitTracker;
+import gr.hellenic.client.configs.ConfigStore;
+import gr.hellenic.client.configs.PerformanceConfig;
+import net.minecraft.client.Minecraft;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(FramerateLimitTracker.class)
+public abstract class MixinFramerateLimitTracker {
+
+    @Inject(at = @At("RETURN"), method = "getFramerateLimit", cancellable = true)
+    private void onGetFramerateLimit(CallbackInfoReturnable<Integer> info) {
+        PerformanceConfig config = ConfigStore.instance.getConfig().performanceConfig;
+        if (config.limitBackgroundWindowFps && !Minecraft.getInstance().isWindowActive()) {
+            info.setReturnValue(config.backgroundWindowFps);
+        }
+    }
+}

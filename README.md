@@ -1,4 +1,4 @@
-# Cheat Utils
+# Hellenic Client
 
 ## Warning
 
@@ -6,7 +6,7 @@ If you use download button on github, repository will not work since it is using
 
 To download repository with submodules use below command:
 
-`git clone --recurse-submodules https://github.com/Zergatul/cheatutils.git`
+`git clone --recurse-submodules <repo-url>`
 
 ## Build
 
@@ -18,7 +18,7 @@ Requires JDK 21.
 Download repo (or just `/common/resources/web` directory), and add JVM argument in Minecraft launcher like this:
 
 ```bat
--Dcheatutils.web.dir=C:\full\path\to\web\directory
+-Dhellenicclient.web.dir=C:\full\path\to\web\directory
 ```
 
 Now local website uses static files from this directory instead of mod resources.
@@ -32,7 +32,7 @@ Now local website uses static files from this directory instead of mod resources
 Create your main class file.
 This is where most of your modules code will be written.
 
-First, navigate to the modules folder located in `common/java/com/zergatul/cheatutils/modules`.
+First, navigate to the modules folder located in `common/java/gr/hellenic/client/modules`.
 Select the folder that best fits your module type.
 from here on, we will refer to a theoretical module named "AutoPearl", however you should follow the same naming conventions
 
@@ -41,7 +41,7 @@ Create a new  file : `"AutoPearl.java"`.
 the class should be in this format:
 
 ```java
-import com.zergatul.cheatutils.modules.Module;
+import gr.hellenic.client.modules.Module;
 
 public class AutoPearl implements Module {
     public static final AutoPearl instance = new AutoPearl();
@@ -70,12 +70,12 @@ Make sure you place it in the right position, modules are initialized in the ord
 
 Add your configuration class
 
-Navigate to `common/java/com/zergatul/cheatutils/configs`
+Navigate to `common/java/gr/hellenic/client/configs`
 
 create a new file `AutoPearlConfig.java`
 
 ```java
-package com.zergatul.cheatutils.configs;
+package gr.hellenic.client.configs;
 
 public class AutoPearlConfig extends ModuleConfig implements ValidatableConfig {
 
@@ -133,16 +133,16 @@ Now, navigate to `configStore.java`, located in the same directory and add these
 #### Step 4
 
 Adding the module API for the website  to work with.
-Navigate to `common/java/com/zergatul/cheatutils/scripting/modules/`
+Navigate to `common/java/gr/hellenic/client/scripting/modules/`
 make a new file `AutoPearlConfig.java`
 
 add these lines
 
 ```java
-package com.zergatul.cheatutils.scripting.modules;
+package gr.hellenic.client.scripting.modules;
 
-import com.zergatul.cheatutils.configs.AutoPearlConfig;
-import com.zergatul.cheatutils.configs.ConfigStore;
+import gr.hellenic.client.configs.AutoPearlConfig;
+import gr.hellenic.client.configs.ConfigStore;
 
 public class AutoPearlApi extends ModuleApi<AutoPearlConfig> {
 
@@ -158,7 +158,7 @@ public class AutoPearlApi extends ModuleApi<AutoPearlConfig> {
 
 Allow the API to be accessed from scripting tools (this refers to user side scripting)
 
-Navigate to `common/java/com/zergatul/cheatutils/scripting/Root.java`
+Navigate to `common/java/gr/hellenic/client/scripting/Root.java`
 
 Add the following lines inside the Root class.
 

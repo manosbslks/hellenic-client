@@ -4,7 +4,7 @@ import { withCss } from '/components/Loader.js'
 
 const monaco = await FallbackLoader.monaco();
 
-const languageId = 'cheatutils-scripting-language';
+const languageId = 'hellenicclient-scripting-language';
 const map = [];
 
 function getSettingsByModel(model) {
@@ -37,7 +37,8 @@ addStyleSheet('https://cdn.jsdelivr.net/npm/vscode-codicons@0.0.17/dist/codicon.
 let dark = null;
 
 function isDark() {
-    return dark && dark.matches;
+    // the panel theme is always dark, so the editor follows it regardless of the OS setting
+    return true;
 }
 
 function applyTheme() {

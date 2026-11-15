@@ -82,7 +82,7 @@ const App = defineComponent({
         onMounted(() => {
             events.subscribe(onEvent);
             http.getText('/api/user').then(response => {
-                document.title = response;
+                document.title = response + ' | Hellenic Client';
             });
         });
 

@@ -2,37 +2,172 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Zergatul Cheat Utils</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hellenic Client</title>
     <link rel="icon" href="/images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="app.css">
     <link rel="stylesheet" type="text/css" href="checkbox.css">
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body>
-    <div id="vue-app">
+<body class="booting">
+    <canvas id="cv" aria-hidden="true"></canvas>
+    <div id="vue-app" v-cloak>
         <div class="main-header">
             <div class="title">
-                <a href="/#">cheatutils</a>
-                <template v-if="module">
-                    → <a :href="'/#/' + module.path">{{ module.name }}</a>
-                </template>
+                <a class="wordmark" href="/#"><img class="brand-icon" src="/images/favicon.png" alt=""><span>Hellenic <em>Client</em></span></a>
             </div>
-            <div class="search">
+            <div class="search" v-if="isMain()">
                 <input type="text" placeholder="Search modules..."
-                    v-if="isMain()"
                     v-model="search"
                     ref="searchInput"
                     @input="onFilterInput()"
                     @keydown="onFilterKeyDown($event)">
             </div>
         </div>
-        <component :is="view"></component>
+        <main class="view">
+            <div class="page-head" v-if="module" :key="module.path">
+                <a class="back-link" href="/#">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    All modules
+                </a>
+                <span class="kicker"><span class="kdot"></span>{{ module.group }}</span>
+                <h1>{{ module.name }}</h1>
+            </div>
+            <component :is="view"></component>
+        </main>
+        <footer class="site-footer">
+            <span class="footer-brand"><img class="brand-icon small" src="/images/favicon.png" alt=""><span>Hellenic <em>Client</em></span></span>
+            <span class="footer-credit">Made by <span class="grad">basilakos1</span></span>
+        </footer>
+    </div>
+    <div id="boot" aria-hidden="true">
+        <div class="boot-logo-wrap">
+            <div class="boot-glow"></div>
+            <div class="boot-rings"><span></span><span></span><span></span></div>
+            <img class="boot-img" src="/images/logo.jpg" alt="Hellenic Client">
+        </div>
+        <div class="boot-credit">
+            <span class="boot-credit-label">Credits</span>
+            Made by <span class="grad">basilakos1</span>
+        </div>
+        <div class="boot-progress">
+            <div class="boot-meta">
+                <span class="boot-status">Loading modules</span>
+                <span class="boot-pct">0%</span>
+            </div>
+            <div class="boot-bar"><div class="boot-fill"></div></div>
+        </div>
     </div>
 
+    <script>
+        // Boot loader: stays up for at least MIN_MS so the logo and credits are seen,
+        // holds at 90% until the panel has actually mounted, then fades out.
+        (function () {
+            const MIN_MS = 3000;
+            const boot = document.getElementById('boot');
+            const app = document.getElementById('vue-app');
+            const fill = boot.querySelector('.boot-fill');
+            const pct = boot.querySelector('.boot-pct');
+            const status = boot.querySelector('.boot-status');
+            const steps = [[0, 'Loading modules'], [0.4, 'Connecting to game'], [0.75, 'Applying theme'], [1, 'Ready']];
+            const start = performance.now();
+            let mounted = !app.hasAttribute('v-cloak');
+            if (!mounted) {
+                new MutationObserver((_, observer) => {
+                    if (!app.hasAttribute('v-cloak')) {
+                        mounted = true;
+                        observer.disconnect();
+                    }
+                }).observe(app, { attributes: true, attributeFilter: ['v-cloak'] });
+            }
+            function tick(now) {
+                const t = Math.min(1, (now - start) / MIN_MS);
+                let p = 1 - Math.pow(1 - t, 2.2);
+                if (!mounted) p = Math.min(p, 0.9);
+                fill.style.width = (p * 100).toFixed(1) + '%';
+                pct.textContent = Math.round(p * 100) + '%';
+                for (const [at, text] of steps) if (p >= at) status.textContent = text;
+                if (p >= 1 && mounted) {
+                    setTimeout(() => {
+                        boot.classList.add('done');
+                        // page entrance animations wait for this, so they play as the loader fades
+                        document.body.classList.remove('booting');
+                        window.dispatchEvent(new Event('boot-done'));
+                    }, 250);
+                    return;
+                }
+                requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        })();
+
+        // Drifting star field behind the panel. Pauses while the tab is hidden,
+        // draws a single still frame when the OS asks for reduced motion.
+        (function () {
+            const cv = document.getElementById('cv');
+            const cx = cv.getContext('2d');
+            const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let W, H, stars = [], raf = 0, t = 0;
+            function resize() {
+                W = cv.width = innerWidth;
+                H = cv.height = innerHeight;
+            }
+            function make() {
+                return {
+                    x: Math.random() * W, y: Math.random() * H,
+                    r: Math.random() * 0.9 + 0.15,
+                    base: Math.random() * 0.4 + 0.06,
+                    phase: Math.random() * 6.28, freq: Math.random() * 0.7 + 0.3,
+                    dx: (Math.random() - 0.5) * 0.07, dy: (Math.random() - 0.5) * 0.035,
+                    purple: Math.random() < 0.22
+                };
+            }
+            function init() {
+                stars = Array.from({ length: Math.round(W * H / 9000) }, make);
+            }
+            function draw() {
+                cx.clearRect(0, 0, W, H);
+                t += 0.011;
+                for (const s of stars) {
+                    if (!still) {
+                        s.x += s.dx; s.y += s.dy;
+                        if (s.x < -2) s.x = W + 2; else if (s.x > W + 2) s.x = -2;
+                        if (s.y < -2) s.y = H + 2; else if (s.y > H + 2) s.y = -2;
+                    }
+                    const a = Math.max(0, s.base + Math.sin(t * s.freq + s.phase) * 0.16);
+                    cx.beginPath();
+                    cx.arc(s.x, s.y, s.r, 0, 6.2832);
+                    cx.fillStyle = s.purple ? `rgba(192,132,252,${a})` : `rgba(210,220,240,${a})`;
+                    cx.fill();
+                }
+            }
+            function frame() {
+                draw();
+                raf = requestAnimationFrame(frame);
+            }
+            function start() {
+                cancelAnimationFrame(raf);
+                if (still) draw(); else frame();
+            }
+            resize(); init(); start();
+            addEventListener('resize', () => { resize(); init(); start(); }, { passive: true });
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) cancelAnimationFrame(raf); else start();
+            });
+        })();
+
+        // Cursor spotlight: cards with a radial glow read --mx/--my from here.
+        document.addEventListener('pointermove', e => {
+            const card = e.target.closest && e.target.closest('.spotlight, .module-main');
+            if (!card) return;
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        }, { passive: true });
+    </script>
     <script type="module" src="app.js"></script>
 </body>
 </html>

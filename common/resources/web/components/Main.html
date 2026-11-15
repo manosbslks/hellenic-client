@@ -1,34 +1,26 @@
 <div class="main">
-    <div class="modules">
-        <div class="module-group">
-            <div class="module-group-header">Automation</div>
-            <module-button v-for="module in automation" :module="module" :statuses="statuses" :filtered="filtered"></module-button>
-        </div>
-        <div class="module-group">
-            <div class="module-group-header">ESP</div>
-            <module-button v-for="module in esp" :module="module" :statuses="statuses" :filtered="filtered"></module-button>
-        </div>
-        <div class="module-group">
-            <div class="module-group-header">Hacks</div>
-            <module-button v-for="module in hacks" :module="module" :statuses="statuses" :filtered="filtered"></module-button>
-        </div>
-        <div class="module-group">
-            <div class="module-group-header">Visuals</div>
-            <module-button v-for="module in visuals" :module="module" :statuses="statuses" :filtered="filtered"></module-button>
-        </div>
-        <div class="module-group">
-            <div class="module-group-header">Scripting</div>
-            <module-button v-for="module in scripting" :module="module" :statuses="statuses" :filtered="filtered"></module-button>
-        </div>
-        <div class="module-group">
-            <div class="module-group-header">Utility</div>
-            <module-button v-for="module in utility" :module="module" :statuses="statuses" :filtered="filtered"></module-button>
+    <div class="hero">
+        <span class="kicker"><span class="kdot green"></span>{{ shown.Active ?? activeTotal }} modules active</span>
+        <h1>Control <span class="grad">Panel</span></h1>
+        <p>Every module in one place. <strong>Changes apply in game</strong> the moment you make them.</p>
+        <div class="stats spotlight">
+            <template v-for="(stat, index) in stats" :key="stat.lbl">
+                <div class="stat-div" v-if="index > 0"></div>
+                <div class="stat">
+                    <div class="stat-num" :class="{ grad: stat.grad }">{{ shown[stat.lbl] ?? stat.num }}</div>
+                    <div class="stat-lbl">{{ stat.lbl }}</div>
+                </div>
+            </template>
         </div>
     </div>
-    <div class="information">
-        <div>{{ generalInfo.gameVersion }}</div>
-        <div>{{ generalInfo.modLoaderVersion }}</div>
-        <div>{{ generalInfo.modCount }}</div>
-        <div>{{ generalInfo.modVersion }}</div>
+    <div class="modules">
+        <div class="module-group spotlight" v-for="(group, groupIndex) in groups" :key="group.key" :style="{ '--g': groupIndex }">
+            <div class="module-group-header">
+                <span class="group-ico" aria-hidden="true">{{ group.icon }}</span>
+                <span class="group-name">{{ group.name }}</span>
+                <span class="on-count" v-if="onCount(group.modules)" :title="onCount(group.modules) + ' active'">{{ onCount(group.modules) }}</span>
+            </div>
+            <module-button v-for="(module, key, index) in group.modules" :module="module" :statuses="statuses" :filtered="filtered" :style="{ '--i': index }"></module-button>
+        </div>
     </div>
 </div>

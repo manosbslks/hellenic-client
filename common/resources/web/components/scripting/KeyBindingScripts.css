@@ -1,5 +1,7 @@
 div.scripts-list {
-    border: 0.2em solid var(--color1);
+    background-color: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
     flex-grow: 1;
     flex-basis: 15em;
     overflow-y: auto;
@@ -12,8 +14,16 @@ div.scripts-list > table {
 }
 
 div.scripts-list > table td {
-    border-bottom: 0.1em solid var(--color1);
-    padding: 0.3em 0.5em;
+    border-bottom: 1px solid var(--line);
+    padding: 0.4em 0.6em;
+}
+
+div.scripts-list > table tr:last-child > td {
+    border-bottom: 0;
+}
+
+div.scripts-list > table tr:hover > td {
+    background-color: var(--sunk);
 }
 
 div.scripts-list td.script-name-cell {

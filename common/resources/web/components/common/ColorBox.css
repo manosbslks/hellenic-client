@@ -1,7 +1,7 @@
 div.color-box {
-    border-width: 0.1em;
-    border-style: dotted;
+    border: 1px solid #FFFFFF40;
+    border-radius: 3px;
     display: inline-block;
-    width: 0.8em;
-    height: 0.8em;
+    width: 0.85em;
+    height: 0.85em;
 }

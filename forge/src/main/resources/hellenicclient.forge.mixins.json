@@ -1,0 +1,21 @@
+{
+  "required": false,
+  "minVersion": "0.8.2",
+  "package": "gr.hellenic.client.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "mixinPriority": 500,
+  "client": [
+    "forge.schematica.MixinSectionCompiler",
+
+    "forge.MixinGuiGraphics",
+    "forge.MixinKeyboardHandler",
+    "forge.MixinKeyMapping",
+    "forge.MixinLevelRenderer",
+    "forge.MixinLightTexture",
+    "forge.MixinModVersions",
+    "forge.MixinMultiPlayerGameMode"
+  ]
+}

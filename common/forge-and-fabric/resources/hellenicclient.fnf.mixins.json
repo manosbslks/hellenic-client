@@ -1,0 +1,11 @@
+{
+  "required": false,
+  "minVersion": "0.8.2",
+  "package": "gr.hellenic.client.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "mixinPriority": 500,
+  "client": []
+}

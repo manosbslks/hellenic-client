@@ -3,10 +3,10 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0.46,6.2)'
-    id 'cheatutils'
+    id 'hellenicclient'
 }
 
-def mod_version = cheatutils.getModVersion()
+def mod_version = hellenicclient.getModVersion()
 
 version = mod_version
 group = mod_group_id
@@ -27,10 +27,10 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            arg "-mixin.config=cheatutils.common.mixins.json"
-            arg "-mixin.config=cheatutils.iris.mixins.json"
-            arg "-mixin.config=cheatutils.fnf.mixins.json"
-            arg "-mixin.config=cheatutils.forge.mixins.json"
+            arg "-mixin.config=hellenicclient.common.mixins.json"
+            arg "-mixin.config=hellenicclient.iris.mixins.json"
+            arg "-mixin.config=hellenicclient.fnf.mixins.json"
+            arg "-mixin.config=hellenicclient.forge.mixins.json"
             property 'forge.logging.console.level', 'debug'
         }
     }
@@ -110,7 +110,7 @@ tasks.named('jar', Jar) {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : mod_authors,
-                "MixinConfigs"            : 'cheatutils.common.mixins.json,cheatutils.iris.mixins.json,cheatutils.fnf.mixins.json,cheatutils.forge.mixins.json'
+                "MixinConfigs"            : 'hellenicclient.common.mixins.json,hellenicclient.iris.mixins.json,hellenicclient.fnf.mixins.json,hellenicclient.forge.mixins.json'
         ])
     }
 }

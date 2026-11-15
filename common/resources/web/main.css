@@ -1,75 +1,388 @@
 div.main {
     flex-grow: 1;
+    padding: 0 2em 4em;
     position: relative;
 }
 
-div.modules {
-    display: flex;
-    gap: 1em;
-    justify-content: center;
-    margin: 0.5em;
-}
+/* hero */
 
-div.module-group {
-    background-color: var(--color3);
-    border-radius: 2em;
+div.hero {
+    align-items: center;
     display: flex;
-    justify-content: center;
-    width: 8em;
-    padding: 1em;
     flex-direction: column;
-    justify-content: start;
-    gap: 0.15em;
-}
-
-div.module-group-header {
-    color: var(--color8);
-    font-size: 1.5em;
+    padding: 3.5em 0 2.75em;
     text-align: center;
 }
 
+div.hero > span.kicker {
+    margin-bottom: 1.6em;
+}
+
+div.hero > h1 {
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+    font-weight: 800;
+    letter-spacing: -2.5px;
+    line-height: 1;
+    margin: 0 0 0.35em;
+}
+
+div.hero > p {
+    color: var(--text-faint);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin: 0 0 2.2em;
+    max-width: 34em;
+}
+
+div.hero > p > strong {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+div.stats {
+    align-items: center;
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), var(--hi);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5em 2em;
+    justify-content: center;
+    max-width: 100%;
+    padding: 1.1em 2em;
+}
+
+div.stat {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 5.5em;
+}
+
+div.stat-num {
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    white-space: nowrap;
+}
+
+div.stat-lbl {
+    color: var(--text-faint);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+
+div.stat-div {
+    background: var(--line);
+    height: 36px;
+    width: 1px;
+}
+
+/* module groups */
+
+div.modules {
+    align-items: start;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin: 0 auto;
+    max-width: 96em;
+}
+
+div.module-group {
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), var(--hi);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0 0.55em 0.7em;
+    position: relative;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+/* gradient line on top, lights up on hover like the bot cards */
+div.module-group::before {
+    background: linear-gradient(90deg, var(--p), var(--pl), #C084FC);
+    content: '';
+    height: 3px;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity 0.25s;
+}
+
+div.module-group:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 20px 50px rgba(80, 20, 160, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+div.module-group:hover::before {
+    opacity: 1;
+}
+
+div.module-group-header {
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    gap: 0.55em;
+    margin: 0 -0.55em 0.5em;
+    padding: 0.9em 0.75em 0.85em;
+}
+
+span.group-ico {
+    align-items: center;
+    background: rgba(124, 58, 237, 0.14);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 11px;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex: 0 0 auto;
+    font-size: 0.95rem;
+    height: 32px;
+    justify-content: center;
+    width: 32px;
+}
+
+span.group-name {
+    color: var(--white);
+    flex: 1 1 auto;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+span.on-count {
+    align-items: center;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    border-radius: var(--radius-pill);
+    color: #86EFAC;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    gap: 5px;
+    padding: 2px 8px 2px 7px;
+    white-space: nowrap;
+}
+
+span.on-count::before {
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.9);
+    content: '';
+    height: 6px;
+    width: 6px;
+}
+
 div.module-group > button {
-    background-color: var(--color4);
-    border-width: 0;
-    border-radius: 0.5em;
-    color: var(--color1);
+    align-items: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
     font-family: var(--font);
-    font-size: 1em;
+    font-size: 0.86rem;
+    font-weight: 500;
+    gap: 0.5em;
+    justify-content: space-between;
+    min-width: 0;
+    padding: 0.5em 0.65em;
+    text-align: left;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, opacity 0.2s, transform 0.2s;
 }
 
-div.module-group > button.local-link {
-    color: #4070BF;
+div.module-group > button > span.name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-div.module-group > button.external-link {
-    color: #74571C;
-}
-
-div.module-group > button.dangerous {
-    color: #951600;
-}
-
-div.module-group > button.active {
-    color: var(--color7);
+/* status dot: only on modules that can be switched on */
+div.module-group > button.toggleable::after {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    content: '';
+    flex: 0 0 auto;
+    height: 7px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    width: 7px;
 }
 
 div.module-group > button:hover {
-    background-color: var(--color6);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+    transform: translateX(2px);
+}
+
+div.module-group > button.active {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(109, 40, 217, 0.12));
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15), var(--hi);
+    color: var(--white);
+    font-weight: 600;
+}
+
+div.module-group > button.active:hover {
+    border-color: rgba(168, 85, 247, 0.55);
+}
+
+div.module-group > button.active::after {
+    background: var(--green);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18), 0 0 10px rgba(34, 197, 94, 0.8);
+}
+
+div.module-group > button.local-link,
+div.module-group > button.external-link {
+    color: var(--lilac);
+}
+
+div.module-group > button.external-link::after {
+    content: '\2197';
+    flex: 0 0 auto;
+    font-size: 0.85em;
+    opacity: 0.75;
+}
+
+div.module-group > button.dangerous {
+    color: #FCA5A5;
+}
+
+div.module-group > button.dangerous:hover {
+    background: var(--redstone-soft);
+    border-color: rgba(239, 68, 68, 0.3);
 }
 
 div.module-group > button.faded {
-    opacity: 0.2;
+    opacity: 0.18;
 }
 
-div.information {
-    color: #404040;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    text-align: right;
-    font-size: 0.7em;
-    font-family: monospace;
-    font-weight: bold;
-    letter-spacing: -0.03em;
-    margin: 0.5em;
+@media (max-width: 80rem) {
+    div.modules {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-width: 60em;
+    }
+}
+
+@media (max-width: 44rem) {
+    div.main {
+        padding: 0 1em 3em;
+    }
+
+    div.hero {
+        padding-top: 2.5em;
+    }
+
+    div.stat-div {
+        display: none;
+    }
+
+    div.modules {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 28rem) {
+    div.modules {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* ── motion ─────────────────────────────────────────────────────────────── */
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes row-in {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes grad-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes dot-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55), 0 0 10px rgba(34, 197, 94, 0.8); }
+    70% { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0), 0 0 10px rgba(34, 197, 94, 0.8); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0), 0 0 10px rgba(34, 197, 94, 0.8); }
+}
+
+/* hero: one staggered entrance */
+div.hero > * {
+    animation: rise 0.8s cubic-bezier(.22, .68, 0, 1) backwards;
+}
+
+div.hero > :nth-child(1) { animation-delay: 0.05s; }
+div.hero > :nth-child(2) { animation-delay: 0.14s; }
+div.hero > :nth-child(3) { animation-delay: 0.24s; }
+div.hero > :nth-child(4) { animation-delay: 0.34s; }
+
+/* "Panel" slowly shifts through the gradient */
+div.hero > h1 > span.grad {
+    animation: grad-shift 6s ease-in-out infinite;
+    background-image: linear-gradient(120deg, #E879F9 0%, #A855F7 30%, #818CF8 60%, #E879F9 100%);
+    background-size: 220% 100%;
+}
+
+/* cursor spotlight on glass cards (position set by the script in index.html) */
+div.stats.spotlight {
+    background:
+        radial-gradient(420px circle at var(--mx, -999px) var(--my, -999px), rgba(168, 85, 247, 0.12), transparent 45%),
+        rgba(255, 255, 255, 0.04);
+}
+
+div.module-group.spotlight {
+    animation: rise 0.7s cubic-bezier(.22, .68, 0, 1) backwards;
+    animation-delay: calc(0.4s + var(--g, 0) * 0.07s);
+    background:
+        radial-gradient(360px circle at var(--mx, -999px) var(--my, -999px), rgba(168, 85, 247, 0.11), transparent 45%),
+        rgba(255, 255, 255, 0.035);
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.3s cubic-bezier(.22, .68, 0, 1.2);
+}
+
+div.module-group.spotlight:hover {
+    transform: translateY(-4px);
+}
+
+/* rows cascade in after their card */
+div.module-group > button {
+    animation: row-in 0.45s cubic-bezier(.22, .68, 0, 1) backwards;
+    animation-delay: calc(0.55s + var(--g, 0) * 0.07s + var(--i, 0) * 0.022s);
+}
+
+/* lit modules breathe; offsets keep them from pulsing in sync */
+div.module-group > button.active::after {
+    animation: dot-pulse 2.2s ease-out infinite;
+    animation-delay: calc(var(--i, 0) * -0.37s);
 }

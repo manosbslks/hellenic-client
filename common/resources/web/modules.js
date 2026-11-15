@@ -491,6 +491,13 @@ module({
     path: 'block-entity',
     tags: ['block', 'entity', 'chest', 'render']
 });
+module({
+    group: 'visuals',
+    name: 'Hellenic Cape',
+    component: 'HellenicCape',
+    path: 'hellenic-cape',
+    tags: ['hellenic', 'cape', 'capes', 'elytra', 'cosmetic']
+});
 
 // Scripting Modules ======================
 
@@ -564,7 +571,7 @@ module({
     tags: ['llm', 'guide', 'docs', 'documentation'],
     localLink: true,
     onClick() {
-        window.open('/llm/cheatutils-llm-guide.md', '_blank');
+        window.open('/llm/hellenicclient-llm-guide.md', '_blank');
     }
 });
 module({
@@ -574,7 +581,7 @@ module({
     tags: ['llm', 'api', 'docs', 'documentation'],
     localLink: true,
     onClick() {
-        window.open('/llm/cheatutils-api.txt', '_blank');
+        window.open('/llm/hellenicclient-api.txt', '_blank');
     }
 });
 module({
@@ -594,16 +601,6 @@ module({
         }).catch(() => {
             window.open(fallback, '_blank');
         });
-    }
-});
-module({
-    group: 'scripting',
-    name: 'Script Examples',
-    component: 'Script Examples',
-    tags: ['script', 'examples', 'docs', 'documentation'],
-    externalLink: true,
-    onClick() {
-        window.open('https://github.com/Zergatul/cheatutils-examples/tree/master/v3', '_blank');
     }
 });
 
@@ -665,26 +662,6 @@ module({
     path: 'reset',
     tags: ['reset', 'config'],
     dangerous: true
-});
-module({
-    group: 'utility',
-    name: 'Matrix Server',
-    component: 'MatrixServer',
-    tags: ['matrix', 'discord'],
-    externalLink: true,
-    onClick() {
-        window.open('https://matrix.to/#/#cheatutils:matrix.org', '_blank');
-    }
-});
-module({
-    group: 'utility',
-    name: 'YouTube Tutorials',
-    component: 'YouTubeTutorials',
-    tags: ['youtube', 'video', 'tutorial', 'guide', 'docs', 'documentation'],
-    externalLink: true,
-    onClick() {
-        window.open('https://www.youtube.com/playlist?list=PLG9SPA0O8HLSyHpxp-Y66ktVIAjQwWWk_', '_blank');
-    }
 });
 
 export { modules }

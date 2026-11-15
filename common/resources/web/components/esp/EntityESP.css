@@ -1,5 +1,7 @@
 div.entity-list {
-    border: 0.2em solid var(--color1);
+    background-color: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
     flex-grow: 1;
     flex-basis: 15em;
     overflow-y: auto;
@@ -12,50 +14,66 @@ div.entity-list > table {
 }
 
 div.entity-list > table td {
-    border-bottom: 0.1em solid var(--color1);
-    padding-left: 0.1em;
-    padding-right: 0.1em;
+    border-bottom: 1px solid var(--line);
+    padding: 0.45em 0.5em;
+    vertical-align: middle;
+}
+
+div.entity-list > table tr:last-child > td {
+    border-bottom: 0;
+}
+
+div.entity-list > table tr:hover > td {
+    background-color: var(--sunk);
 }
 
 div.entity-esp div.checkboxes {
     display: flex;
-    gap: 0.5em;
+    gap: 0.6em;
+    margin-top: 0.3em;
 }
 
 div.entity-esp div.v-buttons {
     display: flex;
     flex-direction: column;
-    gap: 0.15em;
+    gap: 0.25em;
 }
-
 
 div.entity-esp button.edit,
 div.entity-esp button.remove {
-    width: 4em;
+    min-width: 5em;
 }
 
 div.entity-info-header {
     align-items: center;
     display: flex;
+    font-weight: 500;
     gap: 0.5em;
 }
 
 div.entity-info-id {
-    color: #242583;
+    color: var(--lapis);
+    font-family: var(--mono);
 }
 
 div.entity-info-hierarchy {
+    color: var(--text-muted);
     overflow-wrap: anywhere;
 }
 
 div.entity-info-full-classname {
-    color: #781616;
+    color: var(--text-faint);
+    font-family: var(--mono);
+    overflow-wrap: anywhere;
 }
 
 div.entity-info-interface:after {
-    content: "[interface]";
-    color: #8A5F10;
-    font-size: 0.75em;
+    background-color: var(--lamp-soft);
+    border-radius: 4px;
+    color: var(--lamp);
+    content: "interface";
+    font-size: 0.72em;
+    padding: 0.05em 0.4em;
 }
 
 div.entity-esp td.last-cell {
@@ -64,20 +82,28 @@ div.entity-esp td.last-cell {
 
 div.edit-entity-header {
     font-family: var(--font2);
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+div.edit-entity-header > div.smaller {
+    color: var(--text-muted);
+    font-weight: 400;
 }
 
 div.entity-edit {
     display: flex;
     flex-direction: column;
-    gap: 0.4em;
+    gap: 0.6em;
 }
 
 div.entity-edit > fieldset {
     display: flex;
-    gap: 0.5em;
+    flex-wrap: wrap;
+    gap: 0.75em;
 }
 
-legend.glow-legend {
+legend.outline-legend {
     display: flex;
     gap: 0.5em;
     align-items: center;

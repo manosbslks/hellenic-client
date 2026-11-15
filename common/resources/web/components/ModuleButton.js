@@ -26,6 +26,7 @@ export function createComponent(template) {
                     'external-link': !!props.module.externalLink,
                     'dangerous': !!props.module.dangerous,
                     'active': props.statuses[props.module.component],
+                    'toggleable': props.module.component in props.statuses,
                     'faded': !props.filtered[props.module.component]
                 };
             });

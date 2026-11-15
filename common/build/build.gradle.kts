@@ -8,9 +8,9 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 gradlePlugin {
     plugins {
-        create("cheatutils") {
-            id = "cheatutils"
-            implementationClass = "com.zergatul.cheatutils.CheatUtilsGradlePlugin"
+        create("hellenicclient") {
+            id = "hellenicclient"
+            implementationClass = "gr.hellenic.client.HellenicClientGradlePlugin"
         }
     }
 }

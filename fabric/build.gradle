@@ -5,10 +5,10 @@ plugins {
     id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
     //id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
-    id 'cheatutils'
+    id 'hellenicclient'
 }
 
-ext.mod_version = cheatutils.getModVersion()
+ext.mod_version = hellenicclient.getModVersion()
 
 version = project.mod_version
 group = project.maven_group
@@ -26,7 +26,7 @@ repositories {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/cheatutils.classtweaker")
+    accessWidenerPath = file("src/main/resources/hellenicclient.classtweaker")
 
     mixin {
         useLegacyMixinAp = true
@@ -100,7 +100,7 @@ java {
 }
 
 jar {
-    from("LICENSE") {
+    from("../LICENSE") {
         rename { "${it}_${project.base.archivesName.get()}"}
     }
 
@@ -134,7 +134,8 @@ tasks.withType(JavaCompile).configureEach {
 
 remapJar {
     afterEvaluate {
-        archiveFileName = "$archives_base_name-$mod_version-fabric-${minecraft_version}.jar"
+        // branded file name
+        archiveFileName = "HellenicClient-v12-fabric-${minecraft_version}.jar"
     }
 }
 
@@ -153,7 +154,7 @@ tasks.register('generateMappings', JavaExec) {
             layout.buildDirectory.dir('classes/codegen'),
             sourceSets.codegen.compileClasspath)
 
-    mainClass = 'com.zergatul.cheatutils.codegen.MappingGenerator'
+    mainClass = 'gr.hellenic.client.codegen.MappingGenerator'
 
     def loomExt = project.extensions.getByType(LoomGradleExtensionAPI)
     args(loomExt.namedMinecraftJars.singleFile.toString(), loomExt.mappingsFile.toString())

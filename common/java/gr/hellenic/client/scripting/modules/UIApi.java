@@ -1,0 +1,79 @@
+package gr.hellenic.client.scripting.modules;
+
+import gr.hellenic.client.scripting.ApiType;
+import gr.hellenic.client.scripting.ApiVisibility;
+import gr.hellenic.client.utils.ClientChat;
+import com.zergatul.scripting.MethodDescription;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.Screenshot;
+import net.minecraft.network.chat.MutableComponent;
+
+import static gr.hellenic.client.utils.ComponentUtils.constructMessage;
+
+@SuppressWarnings("unused")
+public class UIApi {
+
+    private final Minecraft mc = Minecraft.getInstance();
+
+    public boolean isDebugScreenEnabled() {
+        return mc.gui.getDebugOverlay().showDebugScreen();
+    }
+
+    @ApiVisibility({ ApiType.ACTION, ApiType.LOGGING })
+    public void systemMessage(String text) {
+        showMessage(constructMessage(text), false);
+    }
+
+    @ApiVisibility({ ApiType.ACTION, ApiType.LOGGING })
+    public void overlayMessage(String text) {
+        showMessage(constructMessage(text), true);
+    }
+
+    @ApiVisibility({ ApiType.ACTION, ApiType.LOGGING })
+    public void systemMessage(String color, String text) {
+        showMessage(constructMessage(color, text), false);
+    }
+
+    @ApiVisibility({ ApiType.ACTION, ApiType.LOGGING })
+    public void overlayMessage(String color, String text) {
+        showMessage(constructMessage(color, text), true);
+    }
+
+    @ApiVisibility({ ApiType.ACTION, ApiType.LOGGING })
+    public void systemMessage(String color1, String text1, String color2, String text2) {
+        showMessage(constructMessage(color1, text1, color2, text2), false);
+    }
+
+    @ApiVisibility({ ApiType.ACTION, ApiType.LOGGING })
+    public void overlayMessage(String color1, String text1, String color2, String text2) {
+        showMessage(constructMessage(color1, text1, color2, text2), true);
+    }
+
+    @MethodDescription("""
+            Array length must be divisible by 2. Example: [color1, text1, color2, text2]
+            """)
+    @ApiVisibility({ ApiType.ACTION, ApiType.LOGGING })
+    public void systemMessage(String[] parameters) {
+        showMessage(constructMessage(parameters), false);
+    }
+
+    @MethodDescription("""
+            Array length must be divisible by 2. Example: [color1, text1, color2, text2]
+            """)
+    @ApiVisibility({ ApiType.ACTION, ApiType.LOGGING })
+    public void overlayMessage(String[] parameters) {
+        showMessage(constructMessage(parameters), true);
+    }
+
+    @MethodDescription("""
+            Saves screenshot, like pressing F2
+            """)
+    @ApiVisibility(ApiType.ACTION)
+    public void screenshot() {
+        Screenshot.grab(mc.gameDirectory, mc.getMainRenderTarget(), message -> mc.execute(() -> mc.gui.getChat().addMessage(message)));
+    }
+
+    private void showMessage(MutableComponent message, boolean overlay) {
+        mc.getChatListener().handleSystemMessage(overlay ? message : ClientChat.prefix().append(message), overlay);
+    }
+}

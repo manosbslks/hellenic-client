@@ -1,0 +1,55 @@
+package gr.hellenic.client.configs.adapters;
+
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import gr.hellenic.client.utils.ClassUtils;
+import gr.hellenic.client.wrappers.ClassRemapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
+
+public class ClassTypeAdapterFactory implements TypeAdapterFactory {
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+        if (type.getRawType() == Class.class) {
+            return (TypeAdapter<T>) new ClassTypeAdapter();
+        }
+        return null;
+    }
+
+    private static class ClassTypeAdapter extends TypeAdapter<Class<?>> {
+
+        private static final Logger LOGGER = LogManager.getLogger(ClassTypeAdapter.class);
+
+        @Override
+        public void write(JsonWriter out, Class<?> value) throws IOException {
+            if (value == null) {
+                out.nullValue();
+            } else {
+                out.value(ClassRemapper.fromObf(value.getName()));
+            }
+        }
+
+        @Override
+        public Class<?> read(JsonReader in) throws IOException {
+            String value = in.nextString();
+            if (value == null) {
+                return null;
+            } else {
+                try {
+                    return ClassUtils.forName(ClassRemapper.toObf(value));
+                } catch (Throwable e) {
+                    LOGGER.warn(String.format("Can't parse class from '%s'", value), e);
+                    return null;
+                }
+            }
+        }
+    }
+}
